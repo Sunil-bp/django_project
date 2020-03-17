@@ -1,0 +1,17 @@
+{% load crispy_forms_tags %}
+
+ <div >
+            <ul class="list-group list-group-flush">
+                {% for rule in rule_list %}
+                <li class="list-group-item">{{rule.rule_no}} :
+                    {{rule.rule}}
+                </li>
+                {% endfor %}
+            </ul>
+        </div>
+
+   {{ rule_form|crispy }}
+<div>
+    <button type="button" onclick="save_rule()" class="btn btn-success">Success</button>
+
+</div>

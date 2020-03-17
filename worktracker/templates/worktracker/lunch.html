@@ -1,0 +1,140 @@
+<div class="lunch_box card-body">
+    <div class="row">
+        <div class="lunch_button col-md-4 ">
+            <button id="lunch_button_start" type="button" onclick="start_lunch()"
+                    class="btn btn-success btn-circle btn-xl ">
+                Start Lunch
+            </button>
+            <button id="lunch_button_stop" type="button" onclick="stop_lunch()"
+                    class="btn btn-danger  btn-circle  btn-xl">
+                Stop lunch
+            </button>
+            <button id="lunch_button_done" type="button"
+                    class="btn btn-dark  btn-circle  btn-xl">
+                Doneo!
+            </button>
+        </div>
+        <div class="lunch_data  col-md-8 ">
+            <div>
+                <div id="lunch_data">
+                    Hungry !
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div id="break" class="card-body">
+    <div class="row">
+        <div class="lunch_button col-md-4 ">
+
+            <button id="break_button_start" type="button" onclick="start_break()"
+                    class="btn btn-success btn-circle btn-xl ">
+                Start Break
+            </button>
+            <button id="break_button_stop" type="button" onclick="stop_break()"
+                    class="btn btn-danger  btn-circle  btn-xl">
+                Stop Break
+            </button>
+        </div>
+        <div class="lunch_button col-md-8 ">
+            <input type="text" id="break_name" placeholder="breako...">
+
+        </div>
+    </div>
+
+    <div class="card" style="width: 18rem;">
+        <div class="card-header">
+            All breaks
+        </div>
+        <div id="break_list">
+            <ul  id="break_ul" class="list-group list-group-flush">
+                {% for break in break_list %}
+                <li class="list-group-item">{{break.break_tittle}} ....
+                    {{break.break_in|time:"H:i"}}:
+                    {{break.break_out |time:"H:i"}}
+                </li>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+
+</div>
+
+{% if lunch %}
+<script>console.log("On Get : User is in lunch  ");
+document.getElementById('lunch_button_start').style.display='none';
+document.getElementById('lunch_button_done').style.display='none';
+document.getElementById('lunch_button_stop').style.display='block';
+document.getElementById('lunch_data').innerHTML='{{lunch_data}}';
+run_lunch_time({{lunch_time}}*1000);
+
+
+
+
+
+
+
+</script>
+{% elif not_in_lunch %}
+<script>
+document.getElementById('lunch_button_done').style.display='none';
+console.log("On Get : User is not in lunch  ");
+document.getElementById('lunch_button_start').style.display='block';
+document.getElementById('lunch_button_stop').style.display='none';
+
+
+
+
+
+
+</script>
+{% else %}
+<script>
+console.log("user completed lunch");
+document.getElementById('lunch_button_done').style.display='block';
+
+document.getElementById('lunch_button_start').style.display='none';
+document.getElementById('lunch_button_stop').style.display='none';
+document.getElementById('lunch_data').innerHTML='{{lunch_data}}';
+
+
+
+
+
+
+
+</script>
+{% endif %}
+
+
+{% if break %}
+<script>console.log("On Get : User has a runing break  ");
+document.getElementById('break_button_start').style.display='none';
+document.getElementById('break_button_stop').style.display='block';
+document.getElementById("break_name").value =" {{break_tittle}}";
+document.getElementById("break_name").disabled = true;
+run_break_time({{break_time}}*1000);
+
+
+
+
+
+
+
+</script>
+{% else %}
+<script>
+console.log("On Get : User has no running break   ");
+document.getElementById('break_button_start').style.display='block';
+document.getElementById('break_button_stop').style.display='none';
+document.getElementById("break_name").disabled = false;
+
+
+
+
+
+
+</script>
+
+{% endif %}
+

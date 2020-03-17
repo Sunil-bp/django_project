@@ -1,0 +1,1489 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    {% load static %}
+    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+    <script src="{% static 'worktracker/TimeCircles.js' %}"></script>
+    <link href="{% static 'worktracker/TimeCircles.css' %}" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="{% static 'worktracker/work_tracker.css' %}">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css"
+          integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ" crossorigin="anonymous">
+
+
+    <title>Worker </title>
+</head>
+
+
+<body>
+<style>
+
+.my-custom-scrollbar {
+position: relative;
+height: 400px;
+overflow: auto;
+}
+.table-wrapper-scroll-y {
+display: block;
+}
+
+/* Style the header */
+.task_header {
+  background-color: #f44336;
+  padding: 30px 40px;
+  color: white;
+  text-align: center;
+}
+
+/* Clear floats after the header */
+.task_header:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+
+/* Style the input */
+input {
+  margin: 0;
+  border: none;
+  border-radius: 0;
+  width: 100%;
+  padding: 10px;
+  float: left;
+  font-size: 16px;
+}
+
+/* Style the "Add" button */
+  .addBtn {
+    padding: 10px;
+    width: 25%;
+    background: #d9d9d9;
+    color: #555;
+    float: left;
+    text-align: center;
+    font-size: 16px;
+    cursor: pointer;
+    transition: 0.3s;
+    border-radius: 0;
+  }
+
+  .addBtn:hover {
+    background-color: #bbb;
+  }
+
+
+
+
+
+
+</style>
+
+{% csrf_token %}
+{% if messages %}
+{% for message in messages %}
+<div class="alert alert-{{ message.tags }}">
+    {{ message }}
+</div>
+{% endfor %}
+{% endif %}
+<section class="first-section " style="padding-bottom: 0%;padding-top: 0px;padding-left: 0px;">
+    <div class="container_fluid">
+        <div class="row" style="
+    margin-right: 0px;
+    margin-left: 0px;
+">
+            <div class="col-md-9">
+
+                <div class="text-content" style="height:70%;padding_bottom:5%">
+                    <div class="row">
+                        <div class="container" id="DayCountdown" data-timer={{time_spent}}
+                             style="height:100px;width: 40%;margin-left: 0px;margin-right: 0px;">
+                        </div>
+                        <button id="id_start_day" style="height:10%;margin-top:3%;margin-left: 20px;"
+                                class="btn btn-success " onclick="start_day();"><i class="fab fa-google-play"></i>
+                        </button>
+                        <button id="id_stop_day" style="height:10%;margin-top:3%;margin-left: 20px;"
+                                class="btn btn-danger " onclick="stop_day(3000);"><i class="fas fa-stop-circle"></i>
+                        </button>
+                    </div>
+
+                    <div style="margin: 0%; class=" align-content-center line-dec
+                    ">
+                </div>
+
+                <div id="id_running_div">
+                    {% if not running_task %}
+                    <span id="Running_task">
+                                    Lets Get started    </span><span> :: </span>
+                    <span id="running_tast_time">
+
+                            {{task_time_running}}
+                        </span>
+                    <button id="id_current_stop" type="button" onclick="current_stop();"
+                            class="btn btn-danger float-right">
+                        <i class="fas fa-stop">
+
+                        </i>
+                    </button>
+                    <button id="id_current_pause" type="button" onclick="current_pause();"
+                            class="btn btn-info float-right">
+                        <i class="fas fa-pause">
+
+                        </i>
+                    </button>
+                    <button id="id_current_start" type="button" onclick="current_run();"
+                            class="btn btn-success float-right">
+                        <i class="fas fa-play">
+
+                        </i>
+                    </button>
+                    {% else %}
+                    <span id="Running_task">
+                        {{running_task.current_task.tittle }} </span><span> :: </span>
+                    <span id="running_tast_time">
+
+                            {{task_time_running}}
+                        </span>
+                    <button id="id_current_stop" type="button" onclick="current_stop();"
+                            class="btn btn-danger float-right">
+                        <i class="fas fa-stop">
+
+                        </i>
+                    </button>
+                    <button id="id_current_pause" type="button" onclick="current_pause();"
+                            class="btn btn-info float-right">
+                        <i class="fas fa-pause">
+
+                        </i>
+                    </button>
+                    <button id="id_current_start" type="button" onclick="current_run();"
+                            class="btn btn-success float-right">
+                        <i class="fas fa-play">
+
+                        </i>
+                    </button>
+
+
+                    {% endif %}
+
+                </div>
+
+            </div>
+        </div>
+        <div class="col-md-3 " style="padding-left: 0px;padding-right: 0px;">
+            <ul class="list-inline float-right" style="padding-left: 0px;padding-right: 20px;">
+                <li class="list-inline-item"><a href="{% url 'main-home' %}"><span
+                        class="fa fa-home fa-lg">&nbsp&nbsp</span></a>
+                </li>
+
+                <li class="list-inline-item"><a href="{% url 'profile' %}"><span
+                        class="fa fa-user-circle fa-lg"></span>&nbsp&nbsp</a>
+                </li>
+
+                <li class="list-inline-item"><a href="#sd"><span class="far fa-paper-plane fa-lg"></span></a></li>
+            </ul>
+        </div>
+    </div>
+
+    </div>
+    <div class="container_fluid">
+        <div class="row" style="
+    margin-right: 0px;
+    margin-left: 0px;
+">
+
+            <div class="col-md-4">
+                <button data-toggle="collapse" data-target="#demo_task" id="id_add_task" aria-expanded="false"
+                        aria-controls="collapse"
+                        style="height:60%;margin-top: 13px;margin-left: 0px;padding-top: 6px;"
+                        class="btn btn-success ">Add task <i class="far fa-plus-square"></i>
+                </button>
+            </div>
+
+
+            <div class="col-md-4">
+
+            </div>
+
+            <div class="col-md-4">
+                <ul class="list-inline float-right" style="padding-left: 0px;padding-right: 20px;">
+                    <li class="list-inline-item">
+                        <button onclick="show_sidetrack_list()">
+                            <span style="margin-right: 50px;"
+                               class="fa fa-plus fa-lg">
+                            </span>
+                        </button>
+                    </li>
+
+
+                    <li class="list-inline-item"><a href="#sd"><span style="color:red;"
+                                                                     class="fas fa-heartbeat fa-lg"></span></a></li>
+                    <li class="list-inline-item">
+                        <div class="dropdown show dropleft">
+                            &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
+                            <span style="color:lightblue;padding-right:10px"
+                                  class="fa fa-sort-down fa-2x " id="dropdownMenuLink"
+                                  data-toggle="dropdown"
+                                  aria-haspopup="true" aria-expanded="false"></span>
+
+
+                            <div class="dropdown-menu " aria-labelledby="dropdownMenuLink">
+                                <div class="card" style="width: 18rem;">
+                                    <div class="card-body" id="day_out">
+                                        Days
+                                    </div>
+                                </div>
+                                <div class="card" style="width: 18rem;">
+                                    <div class="card-body" id="hour_out">
+                                        Hours
+                                    </div>
+                                </div>
+                                <div class="card " style="width: 18rem;">
+                                    <div class="card-body" id="minute_out">
+                                        Minutes
+                                    </div>
+                                </div>
+                                <div class="card" style="width: 18rem;">
+                                    <div class="card-body" id="second_out">
+                                        Seconds
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+
+                </ul>
+            </div>
+        </div>
+
+    </div>
+</section>
+
+
+<section class="second-section" style="
+    padding-top: 10px;
+">
+    <div class="container collapse bg-secondary" style="border-bottom-width: 20px;margin-bottom: 20px;"
+         data-target="#add_new_task" id="demo_task" aria-expanded="false"
+    >
+        <div id="add_new_task" class="task_header bg-secondary ">
+            <h2>Adding new Shit ! </h2>
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-6">
+                        <input type="text" id="task_tittle" placeholder="Title...">
+
+                    </div>
+                    <div class="col-sm-2">
+                        <select id="task_priority" class="form-control">
+                            <option selected>Choose priority...</option>
+                            <option value="1">1</option>
+                            <option value="2">2</option>
+                            <option value="3">3</option>
+                            <option value="4">4</option>
+                            <option value="5">5</option>
+
+                        </select>
+                    </div>
+                    <div class="col-sm-2">
+                        <select id="task_type" class="form-control">
+                            <option selected>Choose task ...</option>
+                            <option value="work">work</option>
+                            <option value="project">project</option>
+                            <option value="life">life</option>
+                        </select>
+                    </div>
+                    <div class="col-sm-2">
+                        <span onclick="add_task()" class="addBtn" style="
+                                                                                  width: 60px;
+                                            ">Add
+                        </span>
+                    </div>
+
+                </div>
+            </div>
+            <p style="padding-top: 20px;" class="text-left bfont-weight-bold text-danger " id="task_add_error">
+
+            </p>
+
+        </div>
+
+
+    </div>
+    </div>
+    <div class="container" style="
+    margin-left: 40px;
+    margin-right: 40px;
+">
+
+        <div id="my_task_pannel">
+            {% if view_type == "1" %}
+            <div class="row" id="task_view_1">
+                <div class="col-md-8 col-sm-6 ">
+                    <div class="table-wrapper-scroll-y my-custom-scrollbar">
+                        <table id="mytable" class="table table-striped table-dark">
+                            <thead>
+                            <tr>
+
+                                <th scope="col-md-8">Tittle</th>
+                                <th scope="col-md-2 "></th>
+                                <th scope="col-md-2">Priority</th>
+                                <th scope="col-md-2 ">Type</th>
+                                <th scope="col-md-2 ">
+                                    <button type="button" onclick="expand_to_2();" class="btn btn-dark">
+                                        <i class="fas fa-expand">
+
+                                        </i>
+                                    </button>
+                                </th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {% for task in current_task %}
+
+                            <tr>
+
+                                <td> {{ task.tittle }}</td>
+                                <td>
+                                    <button type="button" onclick="show_task_info({{task.pk}});"
+                                            class="btn btn-outline-info">Info
+                                    </button>
+                                </td>
+                                <td>{{task.priority}}</td>
+                                <td>{{task.type}}</td>
+                                <td>
+                                    <button type="button" onclick="start_task({{task.pk}});"
+                                            class="btn btn-outline-success">Start
+                                    </button>
+                                </td>
+                            </tr>
+                            {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="col-md-4 col-sm-6 card" id="id_secondary_space">
+
+                </div>
+            </div>
+            {% elif view_type == "2" %}
+            <div class="row">
+                <div class="col-md-12 col-sm-12 ">
+                    <div class="table-wrapper-scroll-y my-custom-scrollbar">
+                        <table id="mytable" class="table table-striped table-dark">
+                            <thead>
+                            <tr>
+
+                                <th scope="col-md-8">Tittle</th>
+                                <th scope="col-md-2 "></th>
+                                <th scope="col-md-2">Priority</th>
+                                <th scope="col-md-2 ">Type</th>
+                                <th scope="col-md-2 ">Created on</th>
+                                <th scope="col-md-2 ">Time taken</th>
+
+                                <!--                                For drop down on subtask -->
+                                <th scope="col-md-2 ">Sub-Task</th>
+                                <th scope="col-md-2 ">
+                                    <button type="button" onclick="expand_to_1();" class="btn btn-dark">
+                                        <i class="fas fa-compress-arrows-alt"></i>
+                                    </button>
+                                </th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {% for task in current_task %}
+
+                            <tr>
+
+                                <td> {{ task.tittle }}</td>
+                                <td>
+                                    <button type="button" onclick="show_task_info({{task.pk}});"
+                                            class="btn btn-outline-info">Info
+                                    </button>
+                                </td>
+                                <td>{{task.priority}}</td>
+                                <td>{{task.type}}</td>
+                                <td> {{ task.create_on }}</td>
+                                <td> {{ task.timetaken }}</td>
+
+                                <td>
+                                    {% if task.isparent != 0%}
+                                    <button class="btn btn-primary" type="button" data-toggle="collapse"
+                                            data-target="#collapsesubtask" aria-expanded="false"
+                                            aria-controls="collapsesubtask">
+                                        <span
+                                                class="fa fa-user-circle fa-lg">
+
+                                        </span>
+                                    </button>
+                                    {% endif %}
+                                </td>
+                                <td>
+                                    <button type="button" onclick="start_task({{task.pk}});"
+                                            class="btn btn-outline-success">Start
+                                    </button>
+                                </td>
+
+                            </tr>
+                            {% if task.isparent != 0%}
+                            <tr>
+                                <div class="collapse" id="collapsesubtask">
+                                    <div class="card card-body">
+                                        list sub shit
+                                    </div>
+                                </div>
+                            </tr>
+                            {% endif %}
+
+                            {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                {% else %}
+                view_type is 3
+                {% endif %}
+            </div>
+        </div>
+</section>
+<section class="third-section" style="
+    padding-top: 0px;
+    padding-bottom: 0px;
+">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-10 col-md-offset-1">
+                <div class="left-image col-md-4">
+                    <h4><em>Integer suscipit</em><br>Nullam volutpat mi vel</h4>
+                    <p>Nulla tempor lectus at mauris bibendum porttitor. Aenean ultrices orci id nibh sodales, vel
+                        suscipit arcu vulputate. Pellentesque hendrerit diam quis leo dignissim, lacinia interdum
+                        nunc
+                        volutpat. Morbi lobortis mattis lectus, a dictum augue lobortis non. Fusce eu nulla
+                        sagittis,
+                        scelerisque eros fringilla, commodo dolor.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<script>
+
+$("#DayCountdown").TimeCircles({
+    "start" :false,
+    "animation": "ticks",
+    "bg_width": 1.4,
+    "fg_width": 0.043333333333333335,
+    "circle_bg_color": "#60686F",
+    "time": {
+        "Days": {
+            "text": "Days",
+            "color": "#FFCC66",
+            "show": false
+        },
+        "Hours": {
+            "text": "Hours",
+            "color": "#ffff99",
+            "show": true
+        },
+        "Minutes": {
+            "text": "Minutes",
+            "color": "#e6ffbb",
+            "show": true
+        },
+        "Seconds": {
+            "text": "Seconds",
+            "color": "#ff99d8",
+            "show": true
+        }
+    }
+});
+$("#DayCountdown").TimeCircles({animation: "ticks"});
+$("#DayCountdown").TimeCircles({direction: "Counter-clockwise"});
+
+
+var tc = $("#DayCountdown").TimeCircles();
+document.getElementById('id_stop_day').style.display='none';
+function start_day() {
+    console.log("Logging in and starting timmer in html start ")
+    tc.start();
+    document.getElementById('id_start_day').style.display='none';
+    document.getElementById('id_stop_day').style.display='block';
+}
+
+function stop_day(time_out) {
+    console.log("Clicked logging out button in html start  ")
+    tc.stop();
+    setTimeout(
+        function() {
+            document.getElementById('id_stop_day').style.display='none';
+            tc.destroy();
+            document.getElementById('DayCountdown').innerHTML="<h1>Go home now, your time has come </h1>";
+        }, time_out);
+}
+
+
+
+
+
+
+
+
+</script>
+
+
+{% if logged_in %}
+<script>console.log("On Get : User was logged in ");
+        start_day();
+
+
+
+
+
+
+
+</script>
+{% elif logged_out %}
+<script>
+        console.log("ON Get : User was looged out ");
+        start_day();
+        stop_day(0);
+
+
+
+
+
+
+
+</script>
+{% endif %}
+
+
+<script>
+
+var end_date = new Date("03/16/2020");
+
+function startTime() {
+    var Difference_In_Time = end_date.getTime() - Date.now();
+    var formated_date = dhm(Difference_In_Time);
+    document.getElementById('day_out').innerHTML ="Days : " +formated_date[0];
+    document.getElementById('hour_out').innerHTML ="Hours : " +formated_date[1];
+    document.getElementById('minute_out').innerHTML ="Minutes : " +formated_date[2];
+    document.getElementById('second_out').innerHTML ="Seconds : " +formated_date[3];
+
+    t = setTimeout(function () {
+        startTime()
+    }, 500);
+    }
+startTime();
+
+function dhm(t){
+    var cd = 24 * 60 * 60 * 1000,
+        ch = 60 * 60 * 1000,
+        cm = 60 * 1000,
+        d = Math.floor(t / cd),
+        h = Math.floor( (t - d * cd) / ch),
+        m = Math.round( (t - d * cd - h * ch) / 60000),
+        s = ((t % 60000) / 1000).toFixed(0),
+        pad = function(n){ return n < 10 ? '0' + n : n; };
+  if( m === 60 ){
+    h++;
+    m = 0;
+  }
+  if( h === 24 ){
+    d++;
+    h = 0;
+  }
+  if(s > 30){
+  m--;
+  }
+  return [d, pad(h), pad(m),pad(s)];
+}
+
+
+</script>
+
+
+
+<script>
+var lunch_set;
+
+function run_lunch_time(time_ms) {
+console.log("time to run lunch current_function")
+console.log(time_ms)
+        lunch_set = setInterval(function() {
+            time_ms  = time_ms + 1000
+            formatted = dhm(time_ms);
+            document.querySelector("#lunch_button_stop").innerHTML = formatted[1]+":"+formatted[2]+":"+formatted[3]
+        }, 1000);
+}
+
+function stop_lunch_time(){
+  clearInterval(lunch_set);
+}
+
+var break_set;
+
+function run_break_time(time_ms) {
+console.log("time to run break current_function")
+console.log(time_ms)
+        lunch_set = setInterval(function() {
+            time_ms  = time_ms + 1000
+            formatted = dhm(time_ms);
+            document.querySelector("#break_button_stop").innerHTML = formatted[1]+":"+formatted[2]+":"+formatted[3]
+        }, 1000);
+}
+
+function stop_break_time(){
+  clearInterval(break_set);
+}
+
+
+var x;
+function run_current_task(time_ms) {
+console.log("time to run)current_function")
+console.log(time_ms)
+document.getElementById('id_current_start').style.display='none';
+document.getElementById('id_current_pause').style.display='block';
+        x = setInterval(function() {
+            time_ms  = time_ms + 1000
+            formatted = dhm(time_ms);
+            document.querySelector("#running_tast_time").innerHTML = formatted[0]+ " days " +formatted[1]+":"+formatted[2]+":"+formatted[3]
+        }, 1000);
+}
+
+
+function stop_fn_run(){
+  clearInterval(x);
+}
+
+// Update the count down every 1 second
+
+function format_time(time){
+console.log("in format tim function ")
+console.log(time)
+
+var formatted = dhm(time*1000);
+console.log("formatted time ")
+console.log(formatted)
+var string_for = formatted[0]+ " days " +formatted[1]+":"+formatted[2]+":"+formatted[3];
+console.log("string")
+console.log(string_for)
+return string_for;
+}
+
+
+</script>
+
+{% if running_task %}
+<script>
+console.log("there is a task add stop button  ");
+document.getElementById('id_current_stop').style.display='block';
+
+    {% if is_running %}
+    console.log("task is also running ")
+    console.log("time in get request ")
+    console.log({{task_time_running}});
+    document.getElementById('id_current_start').style.display='block';
+     document.getElementById('id_current_pause').style.display='none';
+   run_current_task({{task_time_running}}*1000);
+console.log({{task_time_running}});
+
+
+    {% else %}
+    console.log("task not runing ");
+    console.log("time in get request ")
+    console.log({{task_time_running}});
+    var formated_time  = format_time({{task_time_running}});
+    document.querySelector("#running_tast_time").innerHTML =formated_time;
+
+    document.getElementById('id_current_pause').style.display='none';
+
+    {% endif %}
+
+
+
+
+
+
+
+</script>
+{% else %}
+
+<script>
+document.getElementById('id_current_pause').style.display='none';
+console.log("task not there ");
+document.querySelector("#running_tast_time").innerHTML ="";
+document.getElementById('id_current_stop').style.display='none';
+document.getElementById('id_current_start').style.display='none';
+
+
+
+
+
+
+</script>
+{% endif %}
+
+<!-- Optional JavaScript -->
+
+<!-- jQuery first, then Popper.js, then Bootstrap JS -->
+<script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
+        integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n"
+        crossorigin="anonymous">
+
+</script>
+<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+
+<script>
+ function show_sidetrack_list() {
+    console.log("In ajax ,getting list of sie track ") // sanity check
+    $.ajax({
+        url : "", // the endpoint
+        type : "POST", // http method
+        data : {
+                    sidetrack_trigger : "True",
+                    csrfmiddlewaretoken: '{{ csrf_token }}' }, // data sent with the post request
+
+        // handle a successful response
+        success : function(sidetrack_list) {
+            $('#id_secondary_space').html(sidetrack_list);
+            console.log("got lunch data ");
+        },
+
+        // handle a non-successful response
+        error : function(xhr,errmsg,err) {
+            console.log(xhr.status + ": " + xhr.responseText); // provide a bit more info about the error to the console
+        }
+    });
+};;
+
+     function show_rules() {
+    console.log("In ajax ,getting rules ") // sanity check
+    $.ajax({
+        url : "", // the endpoint
+        type : "POST", // http method
+        data : {
+                    rule_trigger : "True",
+                    csrfmiddlewaretoken: '{{ csrf_token }}' }, // data sent with the post request
+
+        // handle a successful response
+        success : function(sidetrack_list) {
+            $('#id_secondary_space').html(sidetrack_list);
+            console.log("got rules ");
+        },
+
+        // handle a non-successful response
+        error : function(xhr,errmsg,err) {
+            console.log(xhr.status + ": " + xhr.responseText); // provide a bit more info about the error to the console
+        }
+    });
+};;
+
+      function save_rule() {
+    console.log("In ajax ,saving rule rules ") // sanity check
+    $.ajax({
+        url : "", // the endpoint
+        type : "POST", // http method
+        data : {    rule : document.querySelector("#id_rule").value,
+                    notes : document.querySelector("#id_notes").value,
+                    save_rule_trigger : "True",
+                    csrfmiddlewaretoken: '{{ csrf_token }}' }, // data sent with the post request
+
+        // handle a successful response
+        success : function(sidetrack_list) {
+            $('#id_secondary_space').html(sidetrack_list);
+            console.log("saved rule and loded side track list ");
+        },
+
+        // handle a non-successful response
+        error : function(xhr,errmsg,err) {
+            console.log(xhr.status + ": " + xhr.responseText); // provide a bit more info about the error to the console
+        }
+    });
+};;
+
+
+    function get_lunch_data() {
+    console.log("getting lunch data ") // sanity check
+    $.ajax({
+        url : "", // the endpoint
+        type : "POST", // http method
+        data : {
+                    lunch_data_trigger : "True",
+                    csrfmiddlewaretoken: '{{ csrf_token }}' }, // data sent with the post request
+
+        // handle a successful response
+        success : function(lunch_data) {
+            $('#id_secondary_space').html(lunch_data);
+            console.log("got lunch data ");
+        },
+
+        // handle a non-successful response
+        error : function(xhr,errmsg,err) {
+            console.log(xhr.status + ": " + xhr.responseText); // provide a bit more info about the error to the console
+        }
+    });
+};;
+
+
+</script>
+
+
+
+<script>
+
+$('#id_stop_day').on('click', function(event){
+    event.preventDefault();
+    hour =document.querySelector("#DayCountdown > div > div.textDiv_Hours > span").innerHTML
+    minutes =document.is_runningquerySelector("#DayCountdown > div > div.textDiv_Minutes > span").innerHTML
+    seconds =document.querySelector("#DayCountdown > div > div.textDiv_Seconds > span").innerHTML
+    console.log("Calling create_logout with this time , updating to server with ajax")
+    console.log(hour,minutes,seconds)
+    create_logout(hour,minutes,seconds);
+});
+
+$('#id_start_day').on('click', function(event){
+    event.preventDefault();
+    console.log("Calling create_login with this time , updating to server with ajax");
+    create_login();
+});
+
+function create_logout(hour,minutes,seconds) {
+    console.log("In ajax , create post is working! loging out") // sanity check
+    $.ajax({
+        url : "", // the endpoint
+        type : "POST", // http method
+        data : { hour,minutes,seconds,
+                    logout_trigger : "True",
+                    csrfmiddlewaretoken: '{{ csrf_token }}' }, // data sent with the post request
+
+        // handle a successful response
+        success : function(logout_result) {
+            console.log("parsed json for logout");
+            console.log(logout_result);
+            console.log("success logout out "); // another sanity check
+            stop_day(3000);
+        },
+
+        // handle a non-successful response
+        error : function(xhr,errmsg,err) {
+            console.log(xhr.status + ": " + xhr.responseText); // provide a bit more info about the error to the console
+        }
+    });
+};;
+
+
+
+function create_login() {
+    console.log("Login in ajax ! ") // sanity check
+    $.ajax({
+        url : "", // the endpoint
+        type : "POST", // http method
+        data : {
+                    login_start_trigger : "True",
+                    csrfmiddlewaretoken: '{{ csrf_token }}' }, // data sent with the post request
+
+        // handle a successful response
+        success : function(result_logout) {
+            console.log("logged in user ,result")
+            console.log(result_logout)
+            console.log("User is logged in, calling start_day() java script "); // another sanity check
+            start_day();
+        },
+
+        // handle a non-successful response
+        error : function(xhr,errmsg,err) {
+            console.log(xhr.status + ": " + xhr.responseText); // provide a bit more info about the error to the console
+        }
+    });
+};;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</script>
+
+<script>
+        function start_lunch() {
+    console.log("going for lunch "); // sanity check
+
+     $.ajax({
+        url : "", // the endpoint
+        type : "POST", // http method
+        data : {
+                    going_for_lunch : "True",
+                    csrfmiddlewaretoken: '{{ csrf_token }}' }, // data sent with the post request
+        // handle a successful response
+        success : function(data) {
+            document.getElementById('lunch_button_start').style.display='none';
+            document.getElementById('lunch_button_stop').style.display='block';
+            $('#lunch_data').html(data.lunch_data);
+            run_lunch_time(0)
+            console.log("setting lunch data and making button colour and running timmer "); // another sanity check
+        },
+
+        // handle a non-successful response
+        error : function(xhr,errmsg,err) {
+            console.log(xhr.status + ": " + xhr.responseText); // provide a bit more info about the error to the console
+        }
+    });
+}
+
+        function stop_lunch() {
+    console.log("stopping for lunch "); // sanity check
+
+     $.ajax({
+        url : "", // the endpoint
+        type : "POST", // http method
+        data : {
+                    stopping_lunch : "True",
+                    csrfmiddlewaretoken: '{{ csrf_token }}' }, // data sent with the post request
+        // handle a successful response
+        success : function(data) {
+            document.getElementById('lunch_button_start').style.display='none';
+            document.getElementById('lunch_button_stop').style.display='none';
+                document.getElementById('lunch_button_done').style.display='block';
+
+            $('#lunch_data').html(data.lunch_data);
+            stop_lunch_time()
+            console.log("stop lunch and making button colour and stopping timmer "); // another sanity check
+        },
+
+        // handle a non-successful response
+        error : function(xhr,errmsg,err) {
+            console.log(xhr.status + ": " + xhr.responseText); // provide a bit more info about the error to the console
+        }
+    });
+}
+
+
+
+
+
+
+</script>
+
+
+<script>
+        function start_break() {
+
+    console.log("going for break "); // sanity check
+     break_tittle = document.querySelector("#break_name").value;
+     if(break_tittle ==""){
+     return }
+
+     $.ajax({
+        url : "", // the endpoint
+        type : "POST", // http method
+        data : {    break_tittle :break_tittle,
+                    going_for_break : "True",
+                    csrfmiddlewaretoken: '{{ csrf_token }}' }, // data sent with the post request
+        // handle a successful response
+        success : function(data) {
+            document.getElementById('break_button_start').style.display='none';
+       document.getElementById('break_button_stop').style.display='block';
+       document.getElementById("break_name").disabled = true;
+        run_break_time(0);
+
+            console.log("setting break data and making button colour and running timmer "); // another sanity check
+        },
+
+        // handle a non-successful response
+        error : function(xhr,errmsg,err) {
+            console.log(xhr.status + ": " + xhr.responseText); // provide a bit more info about the error to the console
+        }
+    });
+}
+
+        function stop_break() {
+    console.log("stopping this break  "); // sanity check
+
+     $.ajax({
+        url : "", // the endpoint
+        type : "POST", // http method
+        data : {
+                    stopping_break : "True",
+                    csrfmiddlewaretoken: '{{ csrf_token }}' }, // data sent with the post request
+        // handle a successful response
+        success : function(data) {
+        console.log(data);
+        console.log("stoping new break ");
+           document.getElementById('break_button_start').style.display='block';
+       document.getElementById('break_button_stop').style.display='none';
+       document.getElementById("break_name").disabled = false;
+        document.getElementById("break_name").value = "";
+            stop_break_time();
+            document.getElementById("break_ul").append(data);
+
+            console.log("stop break and making button colour and stopping timmer "); // another sanity check
+        },
+
+        // handle a non-successful response
+        error : function(xhr,errmsg,err) {
+            console.log(xhr.status + ": " + xhr.responseText); // provide a bit more info about the error to the console
+        }
+    });
+}
+
+
+
+
+
+
+</script>
+
+<script>
+
+    {{side_track}}()
+</script>
+<script>
+
+ function current_run() {
+    console.log("running  task "); // sanity check
+    document.getElementById('id_current_start').style.display='none';
+    document.getElementById('id_current_pause').style.display='block';
+    time = 0
+    if ( $('#running_tast_time').length ){running_tast_time
+    time = document.querySelector("#running_tast_time").innerHTML
+    };
+    $.ajax({
+        url : "", // the endpoint
+        type : "POST", // http method
+        data : {
+                    task_run_trigger : "True",
+                    time_task :time,
+                    csrfmiddlewaretoken: '{{ csrf_token }}' }, // data sent with the post request
+        // handle a successful response
+        success : function(data) {
+            console.log(data);
+            run_current_task(data.time *1000)
+            console.log("running curent task"); // another sanity check
+        },
+        // handle a non-successful response
+        error : function(xhr,errmsg,err) {
+            console.log(xhr.status + ": " + xhr.responseText); // provide a bit more info about the error to the console
+        }
+    });
+    }
+
+     function current_pause() {
+    document.getElementById('id_current_start').style.display='block';
+    document.getElementById('id_current_pause').style.display='none';
+    console.log("pause current task "); // sanity check
+    current_time = document.querySelector("#running_tast_time").innerHTML
+    console.log(current_time);
+    console.log("stoping th tmmer function ");
+    stop_fn_run();
+    $.ajax({
+        url : "", // the endpoint
+        type : "POST", // http method
+        data : {
+                    task_pause_trigger : "True",
+                    current_running_time : current_time,
+                    csrfmiddlewaretoken: '{{ csrf_token }}' }, // data sent with the post request
+        // handle a successful response
+        success : function(data) {
+            console.log("paused curent task"); // another sanity check
+
+        },
+        // handle a non-successful response
+        error : function(xhr,errmsg,err) {
+            console.log(xhr.status + ": " + xhr.responseText); // provide a bit more info about the error to the console
+        }
+    });
+    }
+
+
+  function current_stop() {
+    document.getElementById('id_current_start').style.display='none';
+    document.getElementById('id_current_pause').style.display='none';
+    document.getElementById('id_current_stop').style.display='none';
+    console.log("go to stop current task "); // sanity check
+    current_running_time = document.querySelector("#running_tast_time").innerHTML
+    console.log(current_running_time);
+    console.log("stoping the timmer function ");
+    stop_fn_run();
+    $.ajax({
+        url : "", // the endpoint
+        type : "POST", // http method
+        data : {
+                    task_stop_trigger : "True",
+                    current_stop_time : current_running_time,
+                    csrfmiddlewaretoken: '{{ csrf_token }}' }, // data sent with the post request
+        // handle a successful response
+        success : function(data) {
+            console.log("stopped curent task"); // another sanity check
+             document.querySelector("#id_add_task").style.display='none';
+            $('#my_task_pannel').html(data);
+
+        },
+        // handle a non-successful response
+        error : function(xhr,errmsg,err) {
+            console.log(xhr.status + ": " + xhr.responseText); // provide a bit more info about the error to the console
+        }
+    });
+    }
+
+
+    function stop_task_completely() {
+    console.log("stoping task comepletely  task "); // sanity check
+     $.ajax({
+
+        url : "", // the endpoint
+        type : "POST", // http method
+        data : {
+                    ending : document.querySelector("#id_ending").value,
+                    task_stop_completely : "True",
+                    csrfmiddlewaretoken: '{{ csrf_token }}' }, // data sent with the post request
+
+        // handle a successful response
+        success : function(data) {
+            $('#my_task_pannel').html(data);
+              $('#Running_task').html(' Lets Get started');
+            $('#running_tast_time').html("");
+            document.querySelector("#id_add_task").style.display='block';
+            document.getElementById('id_current_pause').style.display='none';
+            document.getElementById('id_current_start').style.display='none';
+            document.getElementById('id_current_stop').style.display='none';
+            console.log("switching back to view 1 from stoppng task data"); // another sanity check
+        },
+
+        // handle a non-successful response
+        error : function(xhr,errmsg,err) {
+            console.log(xhr.status + ": " + xhr.responseText); // provide a bit more info about the error to the console
+        }
+    });
+}
+    function not_stoping_task() {
+    console.log("not stoppng  task "); // sanity check
+     $.ajax({
+        url : "", // the endpoint
+        type : "POST", // http method
+        data : {
+                    task_not_stop : "True",
+                    csrfmiddlewaretoken: '{{ csrf_token }}' }, // data sent with the post request
+        // handle a successful response
+        success : function(data) {
+            $('#my_task_pannel').html(data);
+            document.getElementById('id_current_pause').style.display='none';
+            document.getElementById('id_current_start').style.display='block';
+            document.getElementById('id_current_stop').style.display='block';
+             document.querySelector("#id_add_task").style.display='block';
+            console.log("switching back to view 1 from  not stoppng task data"); // another sanity check
+        },
+
+        // handle a non-successful response
+        error : function(xhr,errmsg,err) {
+            console.log(xhr.status + ": " + xhr.responseText); // provide a bit more info about the error to the console
+        }
+    });
+}
+
+
+ function start_task(task_id) {
+    time = 0
+    console.log("starting task from javascript ie move to current "); // sanity check
+    if ( $('#running_tast_time').length ){running_tast_time
+    time = document.querySelector("#running_tast_time").innerHTML
+    };
+    console.log(task_id);
+    console.log(time);
+    $.ajax({
+        url : "", // the endpoint
+        type : "POST", // http method
+        data : {
+                    task_start_trigger : "True",
+                    time_task : time,
+                    task_id : task_id,
+                    csrfmiddlewaretoken: '{{ csrf_token }}' }, // data sent with the post request
+
+        // handle a successful response
+        success : function(data) {
+            console.log(data);
+            $('#Running_task').html(data.tittle);
+            console.log("stoping existing timer ");
+            stop_fn_run();
+
+            $('#running_tast_time').html(format_time(data.time_taken));
+            document.getElementById('id_current_pause').style.display='none';
+            document.getElementById('id_current_start').style.display='block';
+            document.getElementById('id_current_stop').style.display='block';
+            console.log("new task set and its  not running ");
+        },
+
+        // handle a non-successful response
+        error : function(xhr,errmsg,err) {
+            console.log(xhr.status + ": " + xhr.responseText); // provide a bit more info about the error to the console
+        }
+    });
+}
+
+function show_task_info(task_id) {
+    console.log("showing task info ie move to view 3 task from javascript "); // sanity check
+    $.ajax({
+        url : "", // the endpoint
+        type : "POST", // http method
+        data : {
+                    task_info_trigger : "True",
+                    task_id : task_id,
+                    csrfmiddlewaretoken: '{{ csrf_token }}' }, // data sent with the post request
+
+        // handle a successful response
+        success : function(data) {
+            document.querySelector("#id_add_task").style.display='none';
+            $('#my_task_pannel').html(data);
+            console.log("showed task info "); // another sanity check
+        },
+
+        // handle a non-successful response
+        error : function(xhr,errmsg,err) {
+            console.log(xhr.status + ": " + xhr.responseText); // provide a bit more info about the error to the console
+        }
+    });
+}
+
+function save_view_3(task_id) {
+    document.querySelector('#id_add_task').style.display='block';
+    console.log("savinng task info view 3 task from javascript "); // sanity check
+    console.log(task_id)
+
+
+
+    $.ajax({
+
+        url : "", // the endpoint
+        type : "POST", // http method
+        data : {    priority : document.querySelector("#id_priority").value,
+                    description : document.querySelector("#id_description").value,
+                    notes : document.querySelector("#id_notes").value,
+                    tags : document.querySelector("#id_tags").value,
+                    task_update_trigger : "True",
+                    task_id : task_id,
+                    csrfmiddlewaretoken: '{{ csrf_token }}' }, // data sent with the post request
+
+        // handle a successful response
+        success : function(data) {
+            $('#my_task_pannel').html(data);
+            console.log("switching back to view 1 from saving data"); // another sanity check
+        },
+
+        // handle a non-successful response
+        error : function(xhr,errmsg,err) {
+            console.log(xhr.status + ": " + xhr.responseText); // provide a bit more info about the error to the console
+        }
+    });
+}
+
+
+
+    function expand_to_2() {
+    console.log("expanding to view 2"); // sanity check
+    $.ajax({
+        url : "", // the endpoint
+        type : "POST", // http method
+        data : {
+                    current_view : 2,
+                    csrfmiddlewaretoken: '{{ csrf_token }}' }, // data sent with the post request
+
+        // handle a successful response
+        success : function(data) {
+            $('#my_task_pannel').html(data);
+            console.log("Changed to 2  "); // another sanity check
+        },
+
+        // handle a non-successful response
+        error : function(xhr,errmsg,err) {
+            console.log(xhr.status + ": " + xhr.responseText); // provide a bit more info about the error to the console
+        }
+    });
+
+
+    }
+
+    function expand_to_1() {
+    console.log("expanding to view 1"); // sanity check
+    $.ajax({
+        url : "", // the endpoint
+        type : "POST", // http method
+        data : {
+                    current_view : 1,
+                    csrfmiddlewaretoken: '{{ csrf_token }}' }, // data sent with the post request
+
+        // handle a successful response
+        success : function(data) {
+         <!--$('#my_task_pannel').html($('#my_task_pannel',data).html());-->
+         $('#my_task_pannel').html(data);
+         console.log("Changed to 1   "); // another sanity check
+        },
+
+        // handle a non-successful response
+        error : function(xhr,errmsg,err) {
+            console.log(xhr.status + ": " + xhr.responseText); // provide a bit more info about the error to the console
+        }
+    });
+
+
+    }
+
+    function add_task() {
+    console.log("create task  is working! "); // sanity check
+    console.log(document.querySelector("#task_tittle").value );
+    console.log(document.querySelector("#task_priority").value);
+     if( document.querySelector("#task_tittle").value == ""){
+     document.querySelector("#task_add_error").innerHTML = "Error  : Enter tittle";
+    return 1;
+    };
+
+    if(document.querySelector("#task_priority").value == "Choose priority..." ){
+    document.querySelector("#task_add_error").innerHTML = "Error  : Select a priority";
+    return 1;
+    };
+    if(document.querySelector("#task_type").value == "Choose task ..."){
+     document.querySelector("#task_add_error").innerHTML = "Error  : Select a Task type ";
+    return 1;
+    };
+     task_tittle = document.querySelector("#task_tittle").value;
+     task_priority = document.querySelector("#task_priority").value;
+     task_type = document.querySelector("#task_type").value ;
+    $("#task_type").val("Choose task ...");
+    $("#task_priority").val("Choose priority...");
+    $("#task_tittle").val("");
+    document.querySelector("#task_add_error").innerHTML = "";
+    console.log("Creating new task ");
+     $.ajax({
+        url : "", // the endpoint
+        type : "POST", // http method
+        data : { task_tittle : task_tittle,
+                    task_priority : task_priority,
+                    task_type : task_type ,
+                    task_create_trigger : "True",
+                    csrfmiddlewaretoken: '{{ csrf_token }}' }, // data sent with the post request
+
+        // handle a successful response
+        success : function(data) {
+
+            console.log("data recived on adding new task ");
+            console.log(data);
+            $('#my_task_pannel').html(data);
+            console.log("created new task  "); // another sanity check
+            $("#id_add_task").click();
+
+        },
+
+        // handle a non-successful response
+        error : function(xhr,errmsg,err) {
+            console.log(xhr.status + ": " + xhr.responseText); // provide a bit more info about the error to the console
+        }
+    });
+
+}
+
+
+
+
+ function add_subtask(task_id) {
+    console.log("create subtask  is working! "); // sanity check
+    console.log(document.querySelector("#subtask_tittle").value );
+    console.log(document.querySelector("#subtask_priority").value);
+     if( document.querySelector("#subtask_tittle").value == ""){
+     document.querySelector("#subtask_add_error").innerHTML = "Error  : Enter tittle";
+    return 1;
+    };
+
+    if(document.querySelector("#subtask_priority").value == "Choose priority..." ){
+    document.querySelector("#subtask_add_error").innerHTML = "Error  : Select a priority";
+    return 1;
+    };
+    if(document.querySelector("#subtask_type").value == "Choose task ..."){
+     document.querySelector("#subtask_add_error").innerHTML = "Error  : Select a Task type ";
+    return 1;
+    };
+     subtask_tittle = document.querySelector("#subtask_tittle").value;
+     subtask_priority = document.querySelector("#subtask_priority").value;
+     subtask_type = document.querySelector("#subtask_type").value ;
+    $("#subbtask_type").val("Choose task ...");
+    $("#subtask_priority").val("Choose priority...");
+    $("#subtask_tittle").val("");
+    document.querySelector("#subtask_add_error").innerHTML = "";
+    console.log("Creating new sub task ");
+     $.ajax({
+        url : "", // the endpoint
+        type : "POST", // http method
+        data : { subtask_tittle : subtask_tittle,
+                    task_id :task_id,
+                    subtask_priority : subtask_priority,
+                    subtask_type : subtask_type ,
+                    subtask_create_trigger : "True",
+                    csrfmiddlewaretoken: '{{ csrf_token }}' }, // data sent with the post request
+
+        // handle a successful response
+        success : function(data) {
+             document.querySelector("#id_add_task").style.display='none';
+            console.log("data recived on adding new subtask ");
+            console.log(data);
+            $('#my_task_pannel').html(data);
+            console.log("created new sub task  "); // another sanity check
+            $("#id_add_subtask").click();
+
+        },
+
+        // handle a non-successful response
+        error : function(xhr,errmsg,err) {
+            console.log(xhr.status + ": " + xhr.responseText); // provide a bit more info about the error to the console
+        }
+    });
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</script>
+
+
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
+        integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
+        crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
+        integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
+        crossorigin="anonymous"></script>
+</body>
+</html>

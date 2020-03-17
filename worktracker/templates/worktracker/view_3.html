@@ -1,0 +1,126 @@
+{% load crispy_forms_tags %}
+
+<div>
+    <button type="button" onclick="document.querySelector('#id_add_task').style.display='block';expand_to_2();"
+            class="btn btn-dark">Go Back . .
+    </button>
+</div>
+<div class="container collapse bg-secondary" style="border-bottom-width: 20px;margin-bottom: 20px;"
+     data-target="#add_new_subtask" id="sub_task" aria-expanded="false"
+>
+    <div id="add_new_subtask" class="task_header bg-secondary ">
+        <h2>Adding new subtask ! </h2>
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6">
+                    <input type="text" id="subtask_tittle" placeholder="subtask...">
+
+                </div>
+                <div class="col-sm-2">
+                    <select id="subtask_priority" class="form-control">
+                        <option selected>Choose priority...</option>
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                        <option value="4">4</option>
+                        <option value="5">5</option>
+
+                    </select>
+                </div>
+                <div class="col-sm-2">
+                    <select id="subtask_type" class="form-control">
+                        <option selected>Choose task ...</option>
+                        <option value="work">work</option>
+                        <option value="project">project</option>
+                        <option value="life">life</option>
+                    </select>
+                </div>
+                <div class="col-sm-2">
+                        <span onclick="add_subtask({{current_task.pk}})" class="addBtn" style="
+                                                                                  width: 60px;
+                                            ">Add
+                        </span>
+                </div>
+
+            </div>
+        </div>
+        <p style="padding-top: 20px;" class="text-left bfont-weight-bold text-danger " id="subtask_add_error">
+
+        </p>
+
+    </div>
+
+
+</div>
+
+{% if subtask %}
+<div class="card">
+    <div class="card-header">
+        Subtasks :
+    </div>
+    <ul class="list-group list-group-flush">
+        {% for subtask in subtask_list %}
+        <li {% if subtask.completed %}
+            class="list-group-item text-success"
+            {% else %}
+            class="list-group-item text-danger"
+            {% endif %}
+        >{{subtask.tittle}}
+
+            <button type="button"
+                    onclick="document.querySelector('#id_add_task').style.display='block';show_task_info({{subtask.pk}});"
+                    class="btn btn-dark float-right">Info
+            </button>
+            {% if not subtask.completed %}
+            <button type="button"
+                    onclick="document.querySelector('#id_add_task').style.display='block';start_task({{subtask.pk}});"
+                    class="btn btn-success float-right">Start
+            </button>
+            {% endif %}
+
+        </li>
+        {% endfor %}
+    </ul>
+</div>
+{% endif %}
+<div class="col-md-4">
+    <button data-toggle="collapse" data-target="#sub_task" id="id_add_subtask" aria-expanded="false"
+            aria-controls="collapse"
+            style="height:60%;margin-top: 13px;margin-left: 0px;padding-top: 6px;"
+            class="btn btn-success ">Add subtask <i class="far fa-plus-square"></i>
+    </button>
+</div>
+
+<form method="POST" enctype="multipart/form-data">
+    {% csrf_token %}
+    <fieldset class="form-group">
+        <legend class="border-bottom mb-4">Task Info</legend>
+        <div>
+            <div class="card container_fluid" style="width: 18rem;">
+                <div class="card-body">
+                    <h5
+                            {% if current_task.completed %}
+                            class="card-title text-success"
+                            {% else %}
+                            class="card-title text-danger"
+                            {% endif %}
+
+                    >{{current_task.tittle}}
+                        <span
+                                class="badge badge-pill badge-secondary">{{current_task.type}}
+                </span>
+                    </h5>
+                </div>
+            </div>
+        </div>
+
+        {{ current_task_form|crispy }}
+    </fieldset>
+</form>
+<div>
+    <button type="button" onclick="save_view_3({{current_task.pk}});" class="btn btn-success">Success</button>
+
+</div>
+
+
+

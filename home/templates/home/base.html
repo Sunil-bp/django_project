@@ -1,0 +1,161 @@
+{% load static %}
+<!Doctype html>
+<html lang="en">
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css"
+          integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ" crossorigin="anonymous">
+    <!-- local css -->
+    <link rel="stylesheet" type="text/css" href="{% static 'home/home.css' %}">
+
+
+    <style>
+        #carauselAnnouncement.carousel .carousel-indicators li {
+          background-color: #fff;
+          background-color: rgba(70, 70, 70, 0.25);
+        }
+
+        #carauselAnnouncement.carousel .carousel-indicators .active {
+          background-color: #444;
+        }
+        #carauselAnnouncement.carousel .carousel-indicators{
+        position: absolute;
+        bottom: -50px;
+        }
+
+
+    </style>
+    {% if title %}
+    <title>my home - {{title}}</title>
+    {% else %}
+    <title>Home page default</title>
+    {% endif %}
+</head>
+<body>
+<div>
+    {% block top %}
+    {% endblock %}
+</div>
+<nav class="navbar navbar-expand-sm bg-dark navbar-dark sticky-top">
+    <a class="navbar-brand mr-4" href="#">Web Home </a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="collapsibleNavbar">
+        <div class="navbar-nav mr-auto ">
+            <a class=" nav-lin fa fa-home btn btn-dark mr-4" href="{% url 'main-home' %}"></a>
+            <a class="nav-item nav-link btn btn-dark" href="#"> Apps </a>
+            <a class="nav-item navnav-link btn btn-dark" href="#">Convert to API</a>
+            <a class="nav-item navnav-link btn btn-dark" href="#">Ask community</a>
+            <a class="nav-item navnav-link btn btn-dark" href="#">Source code</a>
+        </div>
+        <div class="navbar-nav">
+            {% if user.is_authenticated %}
+            <a class="nav-item nav-link" href="{% url 'profile' %}">Profile</a>
+            <a class="nav-item nav-link" href="{% url 'logout' %}">Logout</a>
+            {% else %}
+            <a class="nav-item nav-link" href="{% url 'login' %}">Login</a>
+            <a class="nav-item nav-link" href="{% url 'register' %}">Register</a>
+            {% endif %}
+        </div>
+    </div>
+</nav>
+{% if messages %}
+{% for message in messages %}
+<div class="alert alert-{{ message.tags }}">
+    {{ message }}
+</div>
+{% endfor %}
+{% endif %}
+{% block carasol %}
+{% endblock %}
+
+<main role="main" class="container">
+    <div class="row">
+        <div class="col-md-8">
+            {% block content %}{% endblock %}
+        </div>
+        <div class="col-md-4">
+            <div class="content-section">
+                <h3>Our Sidebar</h3>
+                <p class='text-muted'>Add any shit here
+                    <ul class="list-group">
+                        <li class="list-group-item list-group-item-light">
+                            <div class="p-3 mb-3 bg-light rounded">
+                                <h4 class="font-italic">Announcements</h4>
+                                <div id="carauselAnnouncement" class="carousel slide" data-ride="carousel" data-interval="4000">
+                                    <ul class="carousel-indicators">
+                                        {% if announcment.0 %}
+                                        <li data-target="#carauselAnnouncement" data-slide-to="0" class="active"></li>
+                                         {% endif %}
+                                        {% if announcment.1 %}
+                                        <li data-target="#carauselAnnouncement" data-slide-to="1"></li>
+                                         {% endif %}
+                                        {% if announcment.2 %}
+                                        <li data-target="#carauselAnnouncement" data-slide-to="2"></li>
+                                         {% endif %}
+                                    </ul>
+                                    <div class="carousel-inner">
+                                        {% if announcment.0 %}
+                                        <div class="carousel-item active">
+
+                <p class="mb-0">{{announcment.0.author}}    :{{announcment.0.announcement}} and will be complete by {{announcment.0.date_completed_by |date:"d-m-Y"}} <br></p>
+
+            </div>
+            {% endif %}
+            {% if announcment.1 %}
+            <div class="carousel-item ">
+
+               <p class="mb-0">{{announcment.1.author}} : {{announcment.1.announcement}} and will be complete by {{announcment.1.date_completed_by|date:"d-m-Y"}} <br></p>
+
+            </div>
+            {% endif %}
+            {% if announcment.2 %}
+            <div class="carousel-item ">
+
+          <p class="mb-0">{{announcment.2.author}}  :  {{announcment.2.announcement}} and will be complete by {{announcment.2.date_completed_by|date:"d-m-Y"}} <br></p>
+
+            </div>
+            {% endif %}
+        </div>
+
+
+    </div>
+    </div>
+
+
+
+    </li>
+    <li class="list-group-item list-group-item-light"> Latest Posts</li>
+    <li class="list-group-item list-group-item-light">Calendars</li>
+    <li class="list-group-item list-group-item-light">etc</li>
+    </ul>
+    </p>
+    </div>
+
+    </div>
+    </div>
+</main>
+
+<div class="jumbotron text-center" style="margin-bottom:0">
+    <p>Footer</p>
+</div>
+<!-- Optional JavaScript -->
+<!-- jQuery first, then Popper.js, then Bootstrap JS -->
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+        crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+        integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+        crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+        integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+        crossorigin="anonymous"></script>
+</body>
+</html>

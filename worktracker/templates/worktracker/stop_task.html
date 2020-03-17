@@ -1,0 +1,36 @@
+{% load crispy_forms_tags %}
+
+
+
+
+<form method="POST" enctype="multipart/form-data">
+    {% csrf_token %}
+    <fieldset class="form-group">
+        <legend class="border-bottom mb-4">Task Ending </legend>
+        <p>Provide some ending comments !</p>
+        <div>
+            <div class="card container_fluid" style="width: 18rem;">
+                <div class="card-body">
+                    <h5 class="card-title">{{current_task.tittle}}
+                        <span
+                                class="badge badge-pill badge-secondary">{{current_task.type}}
+                </span>
+                    </h5>
+                </div>
+            </div>
+        </div>
+
+        {{ current_task_form|crispy }}
+    </fieldset>
+</form>
+<div>
+    <button type="button" onclick="not_stoping_task();" class="btn btn-danger float-right">Cancel</button>
+
+</div>
+<div>
+    <button type="button" onclick="stop_task_completely();" class="btn btn-success">Close</button>
+
+</div>
+
+
+

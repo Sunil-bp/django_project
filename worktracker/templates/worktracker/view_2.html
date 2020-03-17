@@ -1,0 +1,73 @@
+<div class="row">
+    <div class="col-md-12 col-sm-12 ">
+        <div class="table-wrapper-scroll-y my-custom-scrollbar">
+            <table id="mytable" class="table table-striped table-dark">
+                <thead>
+                <tr>
+
+                    <th scope="col-md-8">Tittle</th>
+                    <th scope="col-md-2 "></th>
+                    <th scope="col-md-2">Priority</th>
+                    <th scope="col-md-2 ">Type</th>
+                    <th scope="col-md-2 ">Created on</th>
+                    <th scope="col-md-2 ">Time taken</th>
+
+                    <!--                                For drop down on subtask -->
+                    <th scope="col-md-2 ">Sub-Task</th>
+                    <th scope="col-md-2 ">
+                        <button type="button" onclick="expand_to_1();" class="btn btn-dark">
+                            <i class="fas fa-compress-arrows-alt"></i>
+                        </button>
+                    </th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for task in current_task %}
+
+                <tr>
+
+                    <td> {{ task.tittle }}</td>
+                    <td>
+                        <button type="button" onclick="show_task_info({{task.pk}});"
+                                class="btn btn-outline-info">Info
+                        </button>
+                    </td>
+                    <td>{{task.priority}}</td>
+                    <td>{{task.type}}</td>
+                    <td> {{ task.create_on }}</td>
+                    <td> {{ task.timetaken }}</td>
+
+                    <td>
+                        {% if task.isparent != 0%}
+                        <button class="btn btn-primary" type="button" data-toggle="collapse"
+                                data-target="#collapsesubtask" aria-expanded="false"
+                                aria-controls="collapsesubtask">
+                                        <span
+                                                class="fa fa-user-circle fa-lg">
+
+                                        </span>
+                        </button>
+                        {% endif %}
+                    </td>
+                    <td>
+                        <button type="button" onclick="start_task({{task.pk}});"
+                                class="btn btn-outline-success">Start
+                        </button>
+                    </td>
+
+                </tr>
+                {% if task.isparent != 0%}
+                <tr>
+                    <div class="collapse" id="collapsesubtask">
+                        <div class="card card-body">
+                            list sub shit
+                        </div>
+                    </div>
+                </tr>
+                {% endif %}
+
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>

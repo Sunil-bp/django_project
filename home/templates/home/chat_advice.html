@@ -1,0 +1,33 @@
+{% extends "home/base.html" %}
+
+{% block content %}
+
+{% load static %}
+<link rel="stylesheet" type="text/css" href="{% static 'home/chat_advice.css' %}">
+{% load new_filters %}
+<h2>Life advice</h2>
+{% for line in chat_data %}
+{% if not "Pika" in line %}
+
+<div class="mycontainer">
+    <img src="/media/me.jpg " alt="Avatar" style="width:100%;">
+    {% with line|chat_split as data %}
+    <p> {{data.1}} </p>
+    <span class="time-right">{{ data.0 }}</span>
+    {% endwith %}
+</div>
+{% else %}
+<div class="mycontainer mydarker">
+    <img src="/media/her.jpg " alt="Avatar" class="right" style="width:100%;">
+    {% with line|chat_split as data %}
+    <p> {{data.1}}</p>
+    <span class="time-left">{{ data.0 }}</span>
+    {% endwith %}
+
+</div>
+{% endif %}
+
+{% endfor %}
+{% endblock content%}
+</body>
+
