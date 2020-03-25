@@ -22,7 +22,7 @@ def about(request):
     return render(request,'home/about.html',{'title':'about home'})
 
 def user_check(user):
-    return user.username in ["sunil","test6"]
+    return user.username in ["sunil","test"]
 
 @login_required
 @user_passes_test(user_check,login_url='/unauthorised_page/')
