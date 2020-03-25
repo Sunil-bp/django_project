@@ -125,8 +125,8 @@ USE_TZ = True
 STATIC_URL = '/static/'
 STATIC_ROOT ='/home/sunilbp96/django_project/static/'
 
-#MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
-#MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+MEDIA_URL = '/media/'
 
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
 
@@ -141,4 +141,4 @@ EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
 EMAIL_HOST_USER = 'sunilpoojari329@gmail.com'
-EMAIL_HOST_PASSWORD = 'Hellokitty@123'
+EMAIL_HOST_PASSWORD = 'zmbyehluazlxizxx'
