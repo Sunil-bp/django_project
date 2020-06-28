@@ -24,7 +24,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = 'h6!j&fosv4bvf7e@h78tcn9qj(lfvklph=0*!8vaa#^_l(^j6='
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = ["sunilbp96.pythonanywhere.com","127.0.0.1","localhost"]
 
@@ -36,6 +36,7 @@ INSTALLED_APPS = [
     'django_filters',
     'expense_tracker.apps.ExpenseTrackerConfig',
     'users.apps.UsersConfig',
+    'app_log.apps.AppLogConfig',
     'home.apps.HomeConfig',
     'worktracker.apps.WorktrackerConfig',
      'crispy_forms',
@@ -153,7 +154,7 @@ REST_FRAMEWORK = {
     ),
     'DEFAULT_AUTHENTICATION_CLASSES': (
         'rest_framework_jwt.authentication.JSONWebTokenAuthentication',
-        #'rest_framework.authentication.SessionAuthentication',
+        'rest_framework.authentication.SessionAuthentication',
         # 'rest_framework.authentication.BasicAuthentication',
     ),
 }

@@ -25,6 +25,7 @@ from django.views.generic import TemplateView
 urlpatterns = [
     path("", include('home.urls')),
     path("api/expense-tracker/", include('expense_tracker.urls')),
+    path("api/apps/", include('app_log.urls')),
     path('angular/', expense_tracker_views.angular, name='expense_home'),
     path('expense/', expense_tracker_views.expense_tracker, name='expense_home'),
     path("unauthorised_page/", TemplateView.as_view(template_name='home/unauthorised.html'), name="unauthorised"),
@@ -55,6 +56,6 @@ urlpatterns = [
          ),
          name='password_reset_complete'),
 ]
-
+urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
 if settings.DEBUG:
    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
