@@ -2,25 +2,12 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="c1133638-4f7b-404e-a75a-e4bffa9c4870" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/expense_tracker/serializers.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/django_project.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/django_project.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/db.sqlite3" beforeDir="false" afterPath="$PROJECT_DIR$/db.sqlite3" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/django_project/settings.py" beforeDir="false" afterPath="$PROJECT_DIR$/django_project/settings.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/django_project/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/django_project/urls.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/expense_tracker/admin.py" beforeDir="false" afterPath="$PROJECT_DIR$/expense_tracker/admin.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/expense_tracker/forms.py" beforeDir="false" afterPath="$PROJECT_DIR$/expense_tracker/forms.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/expense_tracker/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/expense_tracker/models.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/expense_tracker/signals.py" beforeDir="false" afterPath="$PROJECT_DIR$/expense_tracker/signals.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/expense_tracker/templates/expense_tracker/expense_home.html" beforeDir="false" afterPath="$PROJECT_DIR$/expense_tracker/templates/expense_tracker/expense_home.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/expense_tracker/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/expense_tracker/urls.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/expense_tracker/static/expense_tracker/index.htm" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/expense_tracker/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/expense_tracker/views.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/media/Thumbs.db" beforeDir="false" afterPath="$PROJECT_DIR$/media/Thumbs.db" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/media/profile_pics/Thumbs.db" beforeDir="false" afterPath="$PROJECT_DIR$/media/profile_pics/Thumbs.db" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/users/signals.py" beforeDir="false" afterPath="$PROJECT_DIR$/users/signals.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/worktracker/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/worktracker/models.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />

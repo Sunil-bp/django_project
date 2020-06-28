@@ -194,5 +194,8 @@ class UserLoginAPIView(APIView):
 # def profile(request):
 #     return render(request, 'expense_tracker/profile.html')
 #
-def expense_tracker(request):
+def angular(request):
     return render(request, 'expense_tracker/expense_home.html', {'title': 'expense profile'})
+
+def expense_tracker(request):
+    return render(request, 'expense_tracker/index.html')
