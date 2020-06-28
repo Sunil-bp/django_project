@@ -2,25 +2,24 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="c1133638-4f7b-404e-a75a-e4bffa9c4870" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/R_User_Library.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/expense_tracker/__init__.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/expense_tracker/admin.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/expense_tracker/apps.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/expense_tracker/forms.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/expense_tracker/migrations/__init__.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/expense_tracker/models.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/expense_tracker/signals.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/expense_tracker/templates/expense_tracker/expense_home.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/expense_tracker/templates/expense_tracker/profile.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/expense_tracker/tests.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/expense_tracker/urls.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/expense_tracker/views.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/expense_tracker/serializers.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/django_project.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/django_project.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/db.sqlite3" beforeDir="false" afterPath="$PROJECT_DIR$/db.sqlite3" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/django_project/settings.py" beforeDir="false" afterPath="$PROJECT_DIR$/django_project/settings.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/django_project/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/django_project/urls.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/expense_tracker/admin.py" beforeDir="false" afterPath="$PROJECT_DIR$/expense_tracker/admin.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/expense_tracker/forms.py" beforeDir="false" afterPath="$PROJECT_DIR$/expense_tracker/forms.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/expense_tracker/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/expense_tracker/models.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/expense_tracker/signals.py" beforeDir="false" afterPath="$PROJECT_DIR$/expense_tracker/signals.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/expense_tracker/templates/expense_tracker/expense_home.html" beforeDir="false" afterPath="$PROJECT_DIR$/expense_tracker/templates/expense_tracker/expense_home.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/expense_tracker/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/expense_tracker/urls.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/expense_tracker/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/expense_tracker/views.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/media/Thumbs.db" beforeDir="false" afterPath="$PROJECT_DIR$/media/Thumbs.db" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/media/profile_pics/Thumbs.db" beforeDir="false" afterPath="$PROJECT_DIR$/media/profile_pics/Thumbs.db" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/users/signals.py" beforeDir="false" afterPath="$PROJECT_DIR$/users/signals.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/worktracker/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/worktracker/models.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -51,10 +50,10 @@
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
-    <property name="settings.editor.selected.configurable" value="preferences.pluginManager" />
+    <property name="settings.editor.selected.configurable" value="restructured.text.topic" />
   </component>
-  <component name="RunManager" selected="Python.test (1)">
-    <configuration name="sendmail" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+  <component name="RunManager" selected="Python.price">
+    <configuration name="div_not" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="django_project" />
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
@@ -62,11 +61,32 @@
         <env name="PYTHONUNBUFFERED" value="1" />
       </envs>
       <option name="SDK_HOME" value="C:\Users\sunil\AppData\Local\Programs\Python\Python38-32\python.exe" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/worktracker/static/worktracker" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/expense_tracker" />
       <option name="IS_MODULE_SDK" value="false" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/worktracker/static/worktracker/sendmail.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/expense_tracker/div_not.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <configuration name="price" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+      <module name="django_project" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/price.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
@@ -140,10 +160,11 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="Python.price" />
+        <item itemvalue="Python.div_not" />
         <item itemvalue="Python.test (1)" />
         <item itemvalue="Python.ss" />
         <item itemvalue="Python.test" />
-        <item itemvalue="Python.sendmail" />
       </list>
     </recent_temporary>
   </component>
@@ -173,63 +194,57 @@
     <servers />
   </component>
   <component name="WindowStateProjectService">
-    <state x="409" y="6" key="#sendmail" timestamp="1581379428493">
+    <state x="409" y="6" key="#div_not" timestamp="1588973782029">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
-    <state x="409" y="6" key="#sendmail/0.0.1366.728@0.0.1366.728" timestamp="1581379428493" />
-    <state x="409" y="6" key="#ss" timestamp="1581945859724">
-      <screen x="0" y="0" width="1366" height="728" />
-    </state>
-    <state x="409" y="6" key="#ss/0.0.1366.728@0.0.1366.728" timestamp="1581945859724" />
-    <state x="409" y="6" key="#test" timestamp="1581766515272">
-      <screen x="0" y="0" width="1366" height="728" />
-    </state>
-    <state x="409" y="6" key="#test/0.0.1366.728@0.0.1366.728" timestamp="1581766515272" />
-    <state x="409" y="6" key="#test_(1)" timestamp="1582116148402">
-      <screen x="0" y="0" width="1366" height="728" />
-    </state>
-    <state x="409" y="6" key="#test_(1)/0.0.1366.728@0.0.1366.728" timestamp="1582116148402" />
+    <state x="409" y="6" key="#div_not/0.0.1366.728@0.0.1366.728" timestamp="1588973782029" />
     <state x="167" y="125" width="1099" height="543" key="DiffContextDialog" timestamp="1588434336643">
       <screen x="67" y="27" width="1299" height="741" />
     </state>
     <state x="167" y="125" width="1099" height="543" key="DiffContextDialog/67.27.1299.741@67.27.1299.741" timestamp="1588434336643" />
-    <state width="1345" height="252" key="GridCell.Tab.0.bottom" timestamp="1582192441751">
+    <state width="1345" height="238" key="GridCell.Tab.0.bottom" timestamp="1590413990441">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
-    <state width="1345" height="252" key="GridCell.Tab.0.bottom/0.0.1366.728@0.0.1366.728" timestamp="1582192441751" />
-    <state width="1345" height="252" key="GridCell.Tab.0.center" timestamp="1582192441750">
+    <state width="1345" height="238" key="GridCell.Tab.0.bottom/0.0.1366.728@0.0.1366.728" timestamp="1590413990441" />
+    <state width="1345" height="238" key="GridCell.Tab.0.center" timestamp="1590413990440">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
-    <state width="1345" height="252" key="GridCell.Tab.0.center/0.0.1366.728@0.0.1366.728" timestamp="1582192441750" />
-    <state width="1345" height="252" key="GridCell.Tab.0.left" timestamp="1582192441750">
+    <state width="1345" height="238" key="GridCell.Tab.0.center/0.0.1366.728@0.0.1366.728" timestamp="1590413990440" />
+    <state width="1345" height="238" key="GridCell.Tab.0.left" timestamp="1590413990440">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
-    <state width="1345" height="252" key="GridCell.Tab.0.left/0.0.1366.728@0.0.1366.728" timestamp="1582192441750" />
-    <state width="1345" height="252" key="GridCell.Tab.0.right" timestamp="1582192441751">
+    <state width="1345" height="238" key="GridCell.Tab.0.left/0.0.1366.728@0.0.1366.728" timestamp="1590413990440" />
+    <state width="1345" height="238" key="GridCell.Tab.0.right" timestamp="1590413990440">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
-    <state width="1345" height="252" key="GridCell.Tab.0.right/0.0.1366.728@0.0.1366.728" timestamp="1582192441751" />
-    <state x="186" y="10" key="SettingsEditor" timestamp="1581942184456">
+    <state width="1345" height="238" key="GridCell.Tab.0.right/0.0.1366.728@0.0.1366.728" timestamp="1590413990440" />
+    <state x="186" y="10" key="SettingsEditor" timestamp="1591874892093">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
-    <state x="186" y="10" key="SettingsEditor/0.0.1366.728@0.0.1366.728" timestamp="1581942184456" />
+    <state x="186" y="10" key="SettingsEditor/0.0.1366.728@0.0.1366.728" timestamp="1591874892093" />
     <state x="154" y="121" width="1115" height="554" maximized="true" key="com.intellij.history.integration.ui.views.FileHistoryDialog" timestamp="1588427236617">
       <screen x="67" y="27" width="1299" height="741" />
     </state>
-    <state x="92" y="92" width="1182" height="544" maximized="true" key="com.intellij.history.integration.ui.views.FileHistoryDialog/0.0.1366.728@0.0.1366.728" timestamp="1584193810875" />
     <state x="154" y="121" width="1115" height="554" maximized="true" key="com.intellij.history.integration.ui.views.FileHistoryDialog/67.27.1299.741@67.27.1299.741" timestamp="1588427236617" />
-    <state x="438" y="222" key="com.intellij.ide.util.TipDialog" timestamp="1588426522446">
-      <screen x="67" y="27" width="1299" height="741" />
+    <state x="390" y="192" key="com.intellij.ide.util.TipDialog" timestamp="1593255250285">
+      <screen x="0" y="0" width="1366" height="728" />
     </state>
-    <state x="390" y="192" key="com.intellij.ide.util.TipDialog/0.0.1366.728@0.0.1366.728" timestamp="1584357021692" />
+    <state x="390" y="192" key="com.intellij.ide.util.TipDialog/0.0.1366.728@0.0.1366.728" timestamp="1593255250285" />
     <state x="438" y="222" key="com.intellij.ide.util.TipDialog/67.27.1299.741@67.27.1299.741" timestamp="1588426522446" />
-    <state x="324" y="0" key="com.intellij.openapi.editor.actions.MultiplePasteAction$ClipboardContentChooser" timestamp="1581404523635">
+    <state x="346" y="49" width="672" height="678" key="search.everywhere.popup" timestamp="1589080494139">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
-    <state x="324" y="0" key="com.intellij.openapi.editor.actions.MultiplePasteAction$ClipboardContentChooser/0.0.1366.728@0.0.1366.728" timestamp="1581404523635" />
-    <state x="346" y="49" width="672" height="678" key="search.everywhere.popup" timestamp="1584315606087">
-      <screen x="0" y="0" width="1366" height="728" />
-    </state>
-    <state x="346" y="49" width="672" height="678" key="search.everywhere.popup/0.0.1366.728@0.0.1366.728" timestamp="1584315606087" />
+    <state x="346" y="49" width="672" height="678" key="search.everywhere.popup/0.0.1366.728@0.0.1366.728" timestamp="1589080494139" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/expense_tracker/models.py</url>
+          <line>60</line>
+          <option name="timeStamp" value="1" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
   </component>
 </project>

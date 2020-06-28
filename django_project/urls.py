@@ -16,6 +16,7 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 from users import views as user_views
+from expense_tracker import views as expense_tracker_views
 from django.conf.urls.static import static
 from django.contrib.auth import views as auth_views
 from django.conf import settings
@@ -23,7 +24,8 @@ from django.views.generic import TemplateView
 
 urlpatterns = [
     path("", include('home.urls')),
-    path("expense-tracker/", include('expense_tracker.urls')),
+    path("api/expense-tracker/", include('expense_tracker.urls')),
+    path('expense/', expense_tracker_views.expense_tracker, name='expense_home'),
     path("unauthorised_page/", TemplateView.as_view(template_name='home/unauthorised.html'), name="unauthorised"),
     path("worktracker/", include('worktracker.urls')),
     path('register/', user_views.register, name='register'),
@@ -53,5 +55,5 @@ urlpatterns = [
          name='password_reset_complete'),
 ]
 
-#if settings.DEBUG:
-#    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+if settings.DEBUG:
+   urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

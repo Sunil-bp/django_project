@@ -4,12 +4,12 @@ from django.utils import timezone
 import datetime
 # Create your models here.
 
+
 class Login_data(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     login_date = models.DateField(default=timezone.now)
     login_time = models.DateTimeField()
     log_out = models.DateTimeField(null=True, blank=True, default=None)
-
 
 
 class Task(models.Model):
